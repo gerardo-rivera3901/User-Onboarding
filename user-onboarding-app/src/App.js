@@ -20,11 +20,27 @@ const initialFormErrors = {
   termsOfService: '',
 }
 
+
+
 function App() {
   const [users, setUsers] = useState([])
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
+  const [newPup, setNewPup] = useState('')
+
+  useEffect(() => {
+    const getPupper = () => {
+      axios.get('https://dog.ceo/api/breed/pug/images/random')
+        .then(res => {
+          console.log(res.data.message)
+          setNewPup(res.data.message)
+        })
+        .catch(err => {debugger})
+    }
+    getPupper()
+  }, [])
+
 
   useEffect(() => {
     const getUsers = () => {
@@ -32,8 +48,8 @@ function App() {
         .then((res) => {
           setUsers(res.data.data)
           console.log(res.data.data)
-      })
-      .catch((err) => {debugger})
+        })
+        .catch((err) => {debugger})
     }
     getUsers()
   }, [])
@@ -86,7 +102,16 @@ function App() {
           disabled={disabled}
           errors={formErrors}
         />
-        <pre>{JSON.stringify(users, null, 1)}</pre>
+        {users.map(user => (
+          <div key={user.id}>
+            <div style={{borderTop: '1px solid white', width: '30rem', marginTop: '10%'}}></div>
+            <h2>{user.first_name} {user.last_name}</h2>
+            <h2>{user.name}</h2>
+            {user.avatar != undefined ? <img src={user.avatar} alt='Cool Person' /> : <img src={newPup} style={{maxWidth: '150px'}} alt='Cool Person' /> }
+            <h4>Email: {user.email}</h4>
+          </div>
+          ))
+        }
       </header>
     </div>
   );

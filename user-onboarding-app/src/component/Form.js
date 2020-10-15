@@ -32,7 +32,7 @@ export default function Form({values, submit, change, disabled, errors}) {
   return (
     <div>
       <StyledForm onSubmit={onSubmit}>
-        <h1 style={{margin: '0'}}>Login Page</h1>
+        <h1 style={{margin: '0', padding: '3%'}}>Login Page</h1>
         <div className="errors" style={{color: 'red'}}>
           <div>{errors.name}</div>
           <div>{errors.email}</div>
@@ -71,7 +71,7 @@ export default function Form({values, submit, change, disabled, errors}) {
             onChange={onChange}
           />
         </label><br />
-        <button disabled={disabled}>Submit</button>
+        <button id='submitButton' disabled={disabled}>Submit</button>
       </StyledForm>
     </div>
   )
